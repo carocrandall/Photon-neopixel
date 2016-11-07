@@ -8,6 +8,8 @@ project working in the Hybrid Lab.  Particle has great documentation about how t
 I used a terminal shell to connect to the photon the first few times and found that really quite helpful, it makes it easier to troubleshoot
 bad wifi connections.
 
+The Arduino code is flashed onto the particle photon.  I call it arduino code because it is in the .ino format.  
+
 Let me know if you have any questions!  caroline.crandall@cca.edu
 
 Thanks!
