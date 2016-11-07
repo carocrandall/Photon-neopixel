@@ -1,0 +1,13 @@
+This project connects a photon to an adafruit neopixel matrix and allows it to be controlled by an html page.  
+
+In this half of the project you will find photos to show the circuit, a video showing how it works, and the code that was uploaded to the particle photon. 
+Some caveats: starting a particle photon should happen in a place with a strong wifi connection and without a lot of noise.  
+The Hybrid Lab is not a good place to do this, and in fact, it was necessary to bring in a separate wifi source (an ipad) to demo this 
+project working in the Hybrid Lab.  Particle has great documentation about how to start up a photon and some good blink examples. 
+
+I used a terminal shell to connect to the photon the first few times and found that really quite helpful, it makes it easier to troubleshoot
+bad wifi connections.
+
+Let me know if you have any questions!  caroline.crandall@cca.edu
+
+Thanks!
