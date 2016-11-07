@@ -1,0 +1,84 @@
+// You will need to include these libraries - particle has some documentation showing how to add libraries. 
+//I found it a bit confusing, but it is done through the IDE.  This code goes into particle build and is flashed to the photon. 
+
+#include "application.h"
+#include "neopixel/neopixel.h" // use for Build IDE
+// #include "neopixel.h" // use for local build -- didnt need this
+
+SYSTEM_MODE(AUTOMATIC);
+
+#define PIXEL_PIN D2 // pin our pixels are attached to 
+#define PIXEL_COUNT 64 // number of pixels in the matrix
+#define PIXEL_TYPE WS2812B // this part says yo we are using the matrix
+
+// almost all adafruit neopixels have this strip thing they call, its like setting the pins to a variable.
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
+
+
+
+void setup()
+{
+  strip.begin(); // Initialize strip
+  strip.show(); // Initialize all pixels to 'off'
+  strip.setBrightness(25); // reduces power consumption, reduces brightness. FYI cant be used to fade. 
+  
+  Particle.function("led",ledToggle); // here is our function - notice that when we have an html page, it has an html API and this name "led" is in there. 
+
+  
+}
+
+void loop()
+{
+    // Particle.publish("Led is","ON",60,PRIVATE); 
+    //The line above is commented out, but was helpful when debugging - it is an example of how to do a simple print to the console. 
+    // FYI particles console is separate from the build website - it is its own page. 
+    
+
+ }
+
+
+
+
+int ledToggle(String command) {
+        
+        // "command" is a string that is coming in from the html and is carrying JSON data, a few different parts of it. 
+        // We are publishing it to see what it is so we can debug if we need to. 
+        Particle.publish("led-state", command, 60, PRIVATE);
+        
+        // Here we are parsing the data.  Since it is JSON, we know there is a colon in between the two pieces of data we need
+        // we are basically telling the program to go find the colon, and then split everything before it and everything after it into different parts. 
+       
+        int positionOfColon = command.indexOf(":");
+        
+        // this is the first part, what is in front of the colon. 
+        String pixelnumber = command.substring(0, positionOfColon);
+        // this is what is behind the colon
+        String state = command.substring(positionOfColon+1);
+        
+        // since we need the pixel number, we need it to be an int not a string, so we are converting that here 
+        int number = pixelnumber.toInt();
+
+if (state=="on") {
+    // the first number is the number of the pixel, that is the one we need to change
+    // the next three numbers are RGB values. 
+       strip.setPixelColor(number,255,0,0);
+       strip.show();
+       return 1;
+
+  // the two lines starting with "strip" above are from the adafruit neopixel library. 
+  
+       }
+   else if (state =="off") {
+       // the first number is the number of the pixel, that is the one we need to change
+       // the next three are RGB values
+     strip.setPixelColor(number,0,0,0);
+     strip.show();
+    
+       return 0;
+   }
+   else {
+       return -1;
+   }
+   
+   
+}
